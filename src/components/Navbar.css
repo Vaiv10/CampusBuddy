@@ -1,0 +1,85 @@
+.navbar {
+  width: 100%;
+  background-color: #9d0b59; /* deep maroon */
+  padding: 0.6rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: gold;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.logo .highlight {
+  color: yellow;
+}
+
+/* Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links li a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+  color: #ffe082;
+}
+
+/* Login Section */
+.login-section {
+  display: flex;
+  align-items: center;
+}
+
+.login-btn {
+  background-color: #fff;
+  color: #000;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #f8f8f8;
+}
+
+.user-icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}

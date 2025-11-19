@@ -1,0 +1,140 @@
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  font-family: "Inter", sans-serif;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* Background animated blobs */
+.floating-shapes::before,
+.floating-shapes::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  animation: float 8s ease-in-out infinite alternate;
+}
+
+.floating-shapes::before {
+  top: -50px;
+  left: -60px;
+  width: 200px;
+  height: 200px;
+  background: #93c5fd;
+}
+
+.floating-shapes::after {
+  bottom: -70px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  background: #c4b5fd;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(20px);
+  }
+}
+
+/* Auth Card */
+.auth-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  text-align: center;
+  color: #000;
+  z-index: 2;
+}
+
+.auth-card h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.auth-card .subtitle {
+  color: #4b5563;
+  margin-bottom: 1.8rem;
+  font-size: 1rem;
+}
+.auth-card .subtitle span {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+/* Inputs */
+.auth-card input {
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  background: #f9fafb;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Button */
+.glow-btn {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(59, 130, 246, 0.25);
+}
+
+.glow-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+}
+
+/* Login switch */
+.auth-card .switch {
+  margin-top: 1.8rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.auth-card .switch a {
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.auth-card .switch a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Card Elevation effect */
+.elevated-card {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}

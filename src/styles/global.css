@@ -1,0 +1,12 @@
+/* global.css */
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #9333ea;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
