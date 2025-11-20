@@ -1,17 +1,11 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20.11.1'
-            args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         APP_NAME = "campusbuddy"
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 cleanWs()
@@ -19,15 +13,28 @@ pipeline {
             }
         }
 
+        stage('Install Node') {
+            steps {
+                sh '''
+                    if ! command -v node >/dev/null 2>&1; then
+                        echo "Node not found. Installing Node 20.11.1..."
+                        curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+                        apt-get install -y nodejs
+                    fi
+
+                    node -v
+                    npm -v
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh 'node -v'
-                sh 'npm -v'
                 sh 'npm install'
             }
         }
 
-        stage('Run Build') {
+        stage('Build App') {
             steps {
                 sh 'npm run build'
             }
@@ -39,7 +46,7 @@ pipeline {
             }
         }
 
-        stage('Run Docker') {
+        stage('Deploy Container') {
             steps {
                 sh 'docker stop ${APP_NAME} || true'
                 sh 'docker rm ${APP_NAME} || true'
