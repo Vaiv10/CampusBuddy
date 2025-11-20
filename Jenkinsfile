@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     tools {
-        nodejs "node20"   // <-- name you configured
+        nodejs "node20"
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 cleanWs()
@@ -16,8 +15,6 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'node -v'
-                sh 'npm -v'
                 sh 'npm install'
             }
         }
