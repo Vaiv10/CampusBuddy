@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:20.11.1'
+            args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         APP_NAME = "campusbuddy"
@@ -34,15 +39,10 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Run Docker') {
             steps {
                 sh 'docker stop ${APP_NAME} || true'
                 sh 'docker rm ${APP_NAME} || true'
-            }
-        }
-
-        stage('Run New Container') {
-            steps {
                 sh 'docker run -d -p 3000:3000 --name ${APP_NAME} ${APP_NAME}:latest'
             }
         }
