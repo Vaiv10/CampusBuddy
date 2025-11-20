@@ -1,11 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        APP_NAME = "campusbuddy"
+    tools {
+        nodejs "node20"   // <-- name you configured
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 cleanWs()
@@ -13,28 +14,15 @@ pipeline {
             }
         }
 
-        stage('Install Node') {
-            steps {
-                sh '''
-                    if ! command -v node >/dev/null 2>&1; then
-                        echo "Node not found. Installing Node 20.11.1..."
-                        curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-                        apt-get install -y nodejs
-                    fi
-
-                    node -v
-                    npm -v
-                '''
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
+                sh 'node -v'
+                sh 'npm -v'
                 sh 'npm install'
             }
         }
 
-        stage('Build App') {
+        stage('Build') {
             steps {
                 sh 'npm run build'
             }
@@ -42,15 +30,15 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t ${APP_NAME}:latest .'
+                sh 'docker build -t campusbuddy .'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Docker Run') {
             steps {
-                sh 'docker stop ${APP_NAME} || true'
-                sh 'docker rm ${APP_NAME} || true'
-                sh 'docker run -d -p 3000:3000 --name ${APP_NAME} ${APP_NAME}:latest'
+                sh 'docker stop campusbuddy || true'
+                sh 'docker rm campusbuddy || true'
+                sh 'docker run -d -p 3000:3000 --name campusbuddy campusbuddy'
             }
         }
     }
