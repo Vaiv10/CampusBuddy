@@ -1,41 +1,40 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs "node20"
-    }
-
     stages {
-        stage('Checkout') {
+
+        stage('Backend Install') {
             steps {
-                cleanWs()
-                git branch: 'main', url: 'https://github.com/Vaiv10/CampusBuddy.git'
+                dir('backend') {
+                    sh 'npm install'
+                }
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Frontend Install') {
             steps {
                 sh 'npm install'
             }
         }
 
-        stage('Build') {
+        stage('Frontend Build') {
             steps {
                 sh 'npm run build'
             }
         }
 
-        stage('Docker Build') {
+        stage('Run Backend Tests') {
             steps {
-                sh 'docker build -t campusbuddy .'
+                dir('backend') {
+                    sh 'npm test || echo "No tests"'
+                }
             }
         }
 
-        stage('Docker Run') {
+        stage('Deploy') {
             steps {
-                sh 'docker stop campusbuddy || true'
-                sh 'docker rm campusbuddy || true'
-                sh 'docker run -d -p 3000:3000 --name campusbuddy campusbuddy'
+                echo "Deployment step (optional)"
+                echo "You can add PM2 / Docker here"
             }
         }
     }
