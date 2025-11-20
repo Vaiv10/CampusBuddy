@@ -1,11 +1,16 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "NodeJS-18"    // <-- Must match the name you added in Tools > NodeJS
+    }
+
     stages {
 
-        stage('Clone') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/Vaiv10/CampusBuddy.git', branch: 'main'
+                cleanWs()
+                git branch: 'main', url: 'https://github.com/Vaiv10/CampusBuddy.git'
             }
         }
 
@@ -29,7 +34,9 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                sh 'docker run -d -p 3000:3000 campusbuddy'
+                sh 'docker stop campusbuddy || true'
+                sh 'docker rm campusbuddy || true'
+                sh 'docker run -d -p 3000:3000 --name campusbuddy campusbuddy'
             }
         }
     }
