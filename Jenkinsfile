@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = "campusbuddy"
+    }
+
     stages {
 
         stage('Checkout') {
@@ -26,15 +30,20 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t campusbuddy .'
+                sh 'docker build -t ${APP_NAME}:latest .'
             }
         }
 
-        stage('Docker Run') {
+        stage('Stop Old Container') {
             steps {
-                sh 'docker stop campusbuddy || true'
-                sh 'docker rm campusbuddy || true'
-                sh 'docker run -d -p 3000:3000 --name campusbuddy campusbuddy'
+                sh 'docker stop ${APP_NAME} || true'
+                sh 'docker rm ${APP_NAME} || true'
+            }
+        }
+
+        stage('Run New Container') {
+            steps {
+                sh 'docker run -d -p 3000:3000 --name ${APP_NAME} ${APP_NAME}:latest'
             }
         }
     }
